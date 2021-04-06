@@ -1,0 +1,24 @@
+version: "3.2"
+
+services:
+  php:
+    build: .
+    container_name: Liker_php
+    volumes:
+      - .:/var/www/Liker/
+    ports:
+      - 9000:9000
+
+  nginx:
+      image: nginx:latest
+      container_name: Liker_nginx
+      volumes:
+          - .:/var/www/Liker/
+          - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+          - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+          - ./logs:/var/log/nginx
+      links:
+          - php:php
+      ports:
+          - 80:80
+          - 443:443
