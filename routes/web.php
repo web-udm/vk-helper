@@ -15,7 +15,7 @@ use App\Http\Controllers\CheckerController;
 |
 */
 
-//с главной перенаправляем сразу на домашнюю у чекера
+//главной страницы нет, поэтому перенаправляю на домашнуюю у чекера постов
 Route::redirect('/', '/checker/home');
 
 Route::get('/get-vk-token', [VkTokenController::class, 'getToken'])->name('get-vk-token');
@@ -24,5 +24,5 @@ Route::get('/set-vk-token', [VkTokenController::class, 'setToken'])->name('set-v
 
 Route::prefix('checker')->group(function () {
     Route::get('/home', [CheckerController::class, 'home'])->name('checker-home');
-    Route::post('/result', [CheckerController::class, 'results'])->name('checker-results');
+    Route::post('/result', [CheckerController::class, 'result'])->name('checker-result');
 });
