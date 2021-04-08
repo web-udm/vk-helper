@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\VkTokenController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CheckerController;
 
@@ -14,4 +15,14 @@ use App\Http\Controllers\CheckerController;
 |
 */
 
-Route::get('/', [CheckerController::class, 'home']);
+//с главной перенаправляем сразу на домашнюю у чекера
+Route::redirect('/', '/checker/home');
+
+Route::get('/get-vk-token', [VkTokenController::class, 'getToken'])->name('get-vk-token');
+
+Route::get('/set-vk-token', [VkTokenController::class, 'setToken'])->name('set-vk-token');
+
+Route::prefix('checker')->group(function () {
+    Route::get('/home', [CheckerController::class, 'home'])->name('checker-home');
+    Route::post('/result', [CheckerController::class, 'results'])->name('checker-results');
+});

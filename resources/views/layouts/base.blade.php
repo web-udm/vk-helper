@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="css/style.css"/>
-    <link rel="stylesheet" href="css/smash.css"/>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+    <link rel="stylesheet" href="../../css/smash.css"/>
     <title>@yield('title')</title>
 </head>
 <body>
@@ -28,17 +28,9 @@
             </div> <!-- row -->
         </div> <!-- container -->
     </section>
-
-    <section class="title">
-        <div class="container main-container">
-            <a href="/"><h1 class="display-1">Сайт помощи Любчам &#128036;</h1></a>
-            <main>
-                @yield('content')
-            </main>
-        </div>
-    </section>
-
 </header>
+
+@yield('content')
 
 <footer class="main-footer"></footer>
 

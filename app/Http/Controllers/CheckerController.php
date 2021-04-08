@@ -60,4 +60,9 @@ class CheckerController extends Controller
             return $this->twig->render($response, 'home/error.twig', ['errorMessage' => $e->getMessage()]);
         }
     }
+
+    public function getToken()
+    {
+
+    }
 }
