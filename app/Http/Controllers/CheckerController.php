@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\MillionPostsException;
+use App\Helpers\VkTokenHelper;
+use App\Validators\LinksValidator;
 use Illuminate\Http\Request;
 
 class CheckerController extends Controller
@@ -11,53 +14,37 @@ class CheckerController extends Controller
         return view('checker.home');
     }
 
-    public function results(Request $request)
+    public function result(Request $request, LinksValidator $linksValidator)
     {
-        try {
-            if (isset($_COOKIE['token'])) {
-                $token = $_COOKIE['token'];
-            } else {
-                throw new \Exception("Кука сдохла");
-            }
+        VkTokenHelper::isTokenInSession();
 
-            $links = explode("\n", $request->getContent()['links']);
-            var_dump($links);die;
+        $links = explode("\n", $request->vk_links);
+        $linksValidator->validate($links);
 
-            $postsNumber = ($request->getParsedBody()['posts_number']);
+        $postsNumber = $request->posts_number;
 
-            if (empty($links[0])) {
-                throw new \Exception('Ты забыла записать ссылки');
-            }
-
-            if ($postsNumber == 'миллион') {
-                throw new \Exception(
-                    "Ты сломала сервер" .
-                    "<br>" .
-                    "<img src='img/9150e4e5ly1fh3mcehmamg2088088qlf.gif'>"
-                );
-            }
-
-            $posts = [];
-
-            foreach ($links as $link) {
-                preg_match('#vk\.com/(.+)#', $link, $match);
-
-                if (empty($match[1])) {
-                    throw new \Exception("Косячная ссылка: $link");
-                }
-
-                $groupId = trim($match[1]); //убираем символ переноса строки, обусловлено вводом пользователя в форму
-
-                $this->vkSender->setApiToken($token);
-                $posts[] = $this->vkSender->getPosts($groupId, $postsNumber);
-                usleep(500000);
-            }
-
-            $serializePosts = $this->postSerializer->serialize($posts);
-
-            return $this->twig->render($response, 'home/results.twig',['groupsData' => $serializePosts]);
-        } catch (\Exception $e) {
-            return $this->twig->render($response, 'home/error.twig', ['errorMessage' => $e->getMessage()]);
+        if ($postsNumber == 'миллион') {
+            throw new MillionPostsException();
         }
+
+        $posts = [];
+
+        foreach ($links as $link) {
+            preg_match('#vk\.com/(.+)#', $link, $match);
+
+            if (empty($match[1])) {
+                throw new \Exception("Косячная ссылка: $link");
+            }
+
+            $groupId = trim($match[1]); //убираем символ переноса строки, обусловлено вводом пользователя в форму
+
+            $this->vkSender->setApiToken($token);
+            $posts[] = $this->vkSender->getPosts($groupId, $postsNumber);
+            usleep(500000);
+        }
+
+        $serializePosts = $this->postSerializer->serialize($posts);
+
+        return $this->twig->render($response, 'home/results.twig', ['groupsData' => $serializePosts]);
     }
 }
