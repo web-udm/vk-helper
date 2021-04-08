@@ -29,7 +29,7 @@ class VkTokenController
      */
     public function setToken(Request $request): RedirectResponse
     {
-        session(['token' => $request->input()['vk_token']]);
+        session(['vk_token' => $request->input()['vk_token']]);
         session()->flash('gotToken', 'Ура, мы получили токен');
 
         return redirect()->route('checker-home');

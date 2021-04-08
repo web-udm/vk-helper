@@ -30,7 +30,11 @@
     </section>
 </header>
 
-@yield('content')
+<div class="container">
+    <main>
+        @yield('content')
+    </main>
+</div>
 
 <footer class="main-footer"></footer>
 
