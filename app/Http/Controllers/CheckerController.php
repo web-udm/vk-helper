@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class CheckerController extends Controller
 {
-    public function home()
+    public function home(Request $request)
     {
         return view('checker.home');
     }
@@ -59,10 +59,5 @@ class CheckerController extends Controller
         } catch (\Exception $e) {
             return $this->twig->render($response, 'home/error.twig', ['errorMessage' => $e->getMessage()]);
         }
-    }
-
-    public function getToken()
-    {
-
     }
 }

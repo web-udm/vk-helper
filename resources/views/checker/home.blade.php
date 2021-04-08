@@ -15,14 +15,14 @@
     <section class="main-form">
         <div class="row justify-content-center">
 
-            {{-- @if ($gotToken)
+            @if (session()->has('gotToken'))
             <div class="alert alert-success" role="alert">
-
+                {{ session()->get('gotToken') }}
             </div>
-            @endif --}}
+            @endif
 
             <form class="col-lg-9" method="post" action="/checker/results">
-                <p class="ma in-form__description">
+                <p class="main-form__description">
                     Любчи, чтобы прочекать посты - напишите ссылки, с которых нужно их собрать, в форму ниже.
                     Каждая новая ссылка - с новой строки
                 </p>
