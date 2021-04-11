@@ -6,8 +6,8 @@ use App\Exceptions\TokenDiedException;
 
 class VkTokenHelper
 {
-    static public function isTokenInSession()
+    static public function isTokenInSession(): bool
     {
-        session()->has('vk_token') ? true : throw new TokenDiedException();
+        return session()->has('vk_token') ? true : throw new TokenDiedException();
     }
 }

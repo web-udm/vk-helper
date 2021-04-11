@@ -8,7 +8,7 @@ class MillionPostsException extends Exception
 {
     public function render()
     {
-        $randomShibaImg = "/../../img/jokes/siba_" . rand(1, 2) . ".gif";
+        $randomShibaImg = asset('img/jokes/') . '/siba_' . rand(1, 2) . ".gif";
 
         return response()->view('errors.joke', ['shibaImg' => $randomShibaImg], 500);
     }

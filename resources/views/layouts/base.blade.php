@@ -38,6 +38,6 @@
 
 <footer class="main-footer"></footer>
 
-<script src="js/bootstrap.bundle.min.js"></script>
+<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 </body>
 </html>
