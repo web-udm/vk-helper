@@ -19,8 +19,8 @@
                     <nav class="navbar navbar-expand-lg">
                         <div class="collapse navbar-collapse sub-menu-bar" id="navbarTwo">
                             <ul class="navbar-nav m-auto">
-                                <li class="nav-item active"><a class="page-scroll" href="/">Посты</a></li>
-                                <li class="nav-item"><a class="page-scroll" href="/liker">Лайкер</a></li>
+                                <li class="nav-item active"><a class="page-scroll" href="/checker/home">Посты</a></li>
+                                <li class="nav-item"><a class="page-scroll" href="/liker/home">Лайкер</a></li>
                             </ul>
                         </div>
                     </nav> <!-- navbar -->

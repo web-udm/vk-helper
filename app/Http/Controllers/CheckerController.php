@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class CheckerController extends Controller
 {
-    public function home(Request $request)
+    public function home()
     {
         return view('checker.home');
     }

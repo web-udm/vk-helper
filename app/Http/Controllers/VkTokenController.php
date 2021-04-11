@@ -6,7 +6,7 @@ use App\Services\VkTokenService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class VkTokenController
+class VkTokenController extends Controller
 {
     /**
      * @param VkTokenService $vkTokenService
