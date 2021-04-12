@@ -8,11 +8,13 @@ use App\Serializers\PostSerializer;
 use App\Services\VkApiService;
 use App\Validators\LinksValidator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CheckerController extends Controller
 {
     public function home()
     {
+        dd($pdo = DB::connection()->getPdo());
         return view('checker.home');
     }
 

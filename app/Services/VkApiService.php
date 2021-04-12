@@ -7,7 +7,7 @@ use VK\Client\VKApiClient;
 
 class VkApiService
 {
-    private vkApiClient $vkApiClient;
+    private VKApiClient $vkApiClient;
 
     private string $token;
 
@@ -43,5 +43,15 @@ class VkApiService
         ]);
 
         return [$groupName => $groupData['items']];
+    }
+
+    public function likePosts(array $groupUrls, int $postsNumber)
+    {
+
+    }
+
+    public function likePost()
+    {
+
     }
 }
