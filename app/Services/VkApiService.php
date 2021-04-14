@@ -69,7 +69,7 @@ class VkApiService
      */
     private function likePostsFromOneGroup(string $groupUrl)
     {
-        $posts = $this->getPostsFromOneGroup($groupUrl, 10);
+        $posts = $this->getPostsFromOneGroup($groupUrl, 2);
 
         $vkApiClient = new VKApiClient();
 
