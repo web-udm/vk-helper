@@ -14,7 +14,6 @@ class CheckerController extends Controller
 {
     public function home()
     {
-        dd($pdo = DB::connection()->getPdo());
         return view('checker.home');
     }
 
@@ -39,7 +38,7 @@ class CheckerController extends Controller
         $linksValidator->validate($groupUrls);
 
         $vkApiService->setToken($token);
-        $posts = $vkApiService->getPosts($groupUrls, $postsNumber);
+        $posts = $vkApiService->getPostsFromAllGroups($groupUrls, $postsNumber);
         $serializePosts = $postSerializer->serialize($posts);
 
         return view('checker.result', [

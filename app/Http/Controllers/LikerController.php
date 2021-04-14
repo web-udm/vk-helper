@@ -8,6 +8,7 @@ use App\Serializers\PostSerializer;
 use App\Services\VkApiService;
 use App\Validators\LinksValidator;
 use Illuminate\Http\Request;
+use VK\Client\VKApiClient;
 
 class LikerController extends Controller
 {
@@ -26,16 +27,12 @@ class LikerController extends Controller
             $token = $request->session()->get('vk_token');
         }
 
-        $postsNumber = $request->posts_number;
-
-        if ($postsNumber == 'миллион') {
-            throw new MillionPostsException();
-        }
-
         $groupUrls = explode("\r\n", $request->vk_links);
         $linksValidator->validate($groupUrls);
 
         $vkApiService->setToken($token);
+
+        $vkApiService->likePostsFromAllGroups($groupUrls);
     }
 }
 

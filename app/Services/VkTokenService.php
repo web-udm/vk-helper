@@ -26,11 +26,11 @@ class VkTokenService
     public function getTokenOnLocal() : string
     {
         $oauth = new VKOAuth();
-        $client_id = 7751109;
+        $client_id = 7511602;
         $redirect_uri = 'https://oauth.vk.com/blank.htm';
         $display = VKOAuthDisplay::PAGE;
         $scope = array(VKOAuthUserScope::WALL, VKOAuthUserScope::GROUPS);
-        $state = 'POPldpjU2CoJj8MoDk2P';
+        $state = 'h23Gvs7gBYxlLc0jWoql';
         $revoke_auth = true;
 
         return $oauth->getAuthorizeUrl(VKOAuthResponseType::TOKEN, $client_id, $redirect_uri, $display, $scope, $state, null, $revoke_auth);
