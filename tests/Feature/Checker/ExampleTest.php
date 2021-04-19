@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Checker\Feature;
 
 use Tests\TestCase;
 
@@ -8,7 +8,7 @@ class ExampleTest extends TestCase
 {
 
     /**
-     * Проверяем, что главная страница подгружается корректно и переадресует на /checker/home
+     * Проверяем, что главная страница подгружается корректно и перенаправляется на /checker/home
      */
     public function testGetMainPage()
     {
