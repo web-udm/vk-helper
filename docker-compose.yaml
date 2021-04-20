@@ -28,6 +28,8 @@ services:
     image: mysql:latest
     command: --default-authentication-plugin=mysql_native_password
     restart: always
+    volumes:
+      - ./docker/mysql/db:/var/lib/mysql
     ports:
       - 3306:3306
     environment:
