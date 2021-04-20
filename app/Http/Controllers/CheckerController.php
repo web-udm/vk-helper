@@ -17,11 +17,10 @@ class CheckerController extends Controller
         return view('checker.home');
     }
 
-    public function result(
-        Request $request,
-        LinksValidator $linksValidator,
-        VkApiService $vkApiService,
-        PostSerializer $postSerializer
+    public function result(Request $request,
+                           LinksValidator $linksValidator,
+                           VkApiService $vkApiService,
+                           PostSerializer $postSerializer
     )
     {
         if (VkTokenHelper::isTokenInSession()) {

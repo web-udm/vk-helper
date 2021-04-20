@@ -14,6 +14,7 @@ class Liking extends Model
         $likingProcess = new Liking();
         $likingProcess->status = 'В процессе';
         $likingProcess->date = $dateOfStart;
+
         $likingProcess->save();
     }
 

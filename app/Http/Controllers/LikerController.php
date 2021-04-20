@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\MillionPostsException;
 use App\Helpers\VkTokenHelper;
 use App\Models\Liking;
-use App\Serializers\PostSerializer;
 use App\Services\VkApiService;
 use App\Validators\LinksValidator;
 use Illuminate\Http\Request;
-use VK\Client\VKApiClient;
+use App\Jobs\AddLikerTask;
 
 class LikerController extends Controller
 {
@@ -18,27 +16,25 @@ class LikerController extends Controller
         return view('liker.home');
     }
 
-    public function result(
-        Request $request,
-        LinksValidator $linksValidator,
-        VkApiService $vkApiService
-    )
+    public function result(Request $request,
+                           LinksValidator $linksValidator)
     {
         if (VkTokenHelper::isTokenInSession()) {
-            $token = $request->session()->get('vk_token');
+            $request->session()->get('vk_token');
         }
 
         $groupUrls = explode("\r\n", $request->vk_links);
         $linksValidator->validate($groupUrls);
 
-        $vkApiService->setToken($token);
+        $token = $request->session()->get('vk_token');
 
-        $dateOfStart = date('Y:m:d H:i:s', time());
-        Liking::createNewLiking($dateOfStart);
+        AddLikerTask::dispatch($groupUrls, $token);
 
-        $vkApiService->likePostsFromAllGroups($groupUrls);
+        $likingTasks = Liking::all();
 
-        Liking::changeStatusToCompleted($dateOfStart);
+        return view('liker.result', [
+            'likingTasks' => $likingTasks
+        ]);
     }
 }
 
