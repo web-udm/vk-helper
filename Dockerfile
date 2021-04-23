@@ -1,8 +1,9 @@
-FROM php:8.0.3-fpm-alpine
+FROM php:8.0.3-fpm
 
 WORKDIR /var/www/Liker
 
-RUN apk add make git
+RUN apt update \
+    && apt install -y make git nano
 
 # composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
@@ -10,6 +11,8 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 	&& php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
 	&& php -r "unlink('composer-setup.php');"
 
-#mysql
+#mysql-extension
 RUN	docker-php-ext-install mysqli \
 	&& docker-php-ext-install pdo_mysql
+
+RUN chown www-data:www-data -R storage/
