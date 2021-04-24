@@ -30,7 +30,7 @@ class LikerController extends Controller
 
         AddLikerTask::dispatch($groupUrls, $token);
 
-        $likingTasks = Liking::all();
+        $likingTasks = Liking::all()->sortByDesc('date');
 
         return view('liker.result', [
             'likingTasks' => $likingTasks
