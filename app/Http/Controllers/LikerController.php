@@ -35,7 +35,16 @@ class LikerController extends Controller
 
     public function result()
     {
-        $likingTasks = Liking::all()->sortByDesc('date');
+        $likingTasks = Liking::all()
+            ->sortByDesc('date')
+            ->map(function($likingTask) {
+                $date = date_create($likingTask->date);
+                date_modify($date, '4 hours');
+                $likingTask->date = date_format($date, 'd.m.Y H:i:m');;
+
+                return $likingTask;
+            });
+
 
         return view('liker.result', [
             'likingTasks' => $likingTasks

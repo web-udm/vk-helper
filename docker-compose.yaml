@@ -11,18 +11,18 @@ services:
       - 9000:9000
 
   nginx:
-      image: nginx:latest
-      container_name: Liker_nginx
-      volumes:
-          - .:/var/www/Liker/
-          - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
-          - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
-          - ./logs:/var/log/nginx
-      links:
-          - php:php
-      ports:
-          - 80:80
-          - 443:443
+    image: nginx:latest
+    container_name: Liker_nginx
+    volumes:
+      - .:/var/www/Liker/
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./logs:/var/log/nginx
+    links:
+      - php:php
+    ports:
+      - 80:80
+      - 443:443
 
   mysql:
     container_name: Liker_mysql
