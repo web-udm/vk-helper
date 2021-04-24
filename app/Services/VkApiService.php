@@ -49,14 +49,11 @@ class VkApiService
 
     /**
      * Лайкинг постов из переданных массивом ссылок групп
-     *
-     * @param array $groupUrls
-     * @param int $postsNumber
      */
-    public function likePostsFromAllGroups(array $groupUrls)
+    public function likePostsFromAllGroups(array $groupUrls, int $maxLikes)
     {
         foreach ($groupUrls as $groupUrl) {
-            $result = $this->likePostsFromOneGroup($groupUrl);
+            $this->likePostsFromOneGroup($groupUrl, $maxLikes);
         }
     }
 
@@ -64,12 +61,10 @@ class VkApiService
      * Лайкаем посты в указанной по ссылке группе. Лайкинг идет до первого залайканного пользователем поста.
      * Закреп пропускается.
      *
-     * @param string $groupUrl
-     * @param int $postsNumber
      */
-    private function likePostsFromOneGroup(string $groupUrl)
+    private function likePostsFromOneGroup(string $groupUrl, int $maxLikes)
     {
-        $posts = $this->getPostsFromOneGroup($groupUrl, 1);
+        $posts = $this->getPostsFromOneGroup($groupUrl, $maxLikes);
 
         $vkApiClient = new VKApiClient();
 

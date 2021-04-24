@@ -17,6 +17,8 @@ class AddLikerTask implements ShouldQueue
 
     private array $groupUrls;
 
+    private string $maxLikes;
+
     private string $token;
 
     /**
@@ -25,9 +27,10 @@ class AddLikerTask implements ShouldQueue
      * @param array $groupUrls
      * @param string $token
      */
-    public function __construct(array $groupUrls, string $token)
+    public function __construct(array $groupUrls, string $maxLikes, string $token)
     {
         $this->groupUrls = $groupUrls;
+        $this->maxLikes = $maxLikes;
         $this->token = $token;
     }
 
@@ -44,7 +47,7 @@ class AddLikerTask implements ShouldQueue
         Liking::createNewLiking($dateOfStart);
 
         $vkApiService->setToken($this->token);
-        $vkApiService->likePostsFromAllGroups($this->groupUrls);
+        $vkApiService->likePostsFromAllGroups($this->groupUrls, (int)$this->maxLikes);
 
         Liking::changeStatusToCompleted($dateOfStart);
     }

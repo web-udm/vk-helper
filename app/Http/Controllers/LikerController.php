@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Helpers\VkTokenHelper;
 use App\Models\Liking;
-use App\Services\VkApiService;
 use App\Validators\LinksValidator;
 use Illuminate\Http\Request;
 use App\Jobs\AddLikerTask;
@@ -16,7 +15,7 @@ class LikerController extends Controller
         return view('liker.home');
     }
 
-    public function result(Request $request,
+    public function addTask(Request $request,
                            LinksValidator $linksValidator)
     {
         if (VkTokenHelper::isTokenInSession()) {
@@ -27,9 +26,15 @@ class LikerController extends Controller
         $linksValidator->validate($groupUrls);
 
         $token = $request->session()->get('vk_token');
+        $maxLikes = $request->get('max_likes');
 
-        AddLikerTask::dispatch($groupUrls, $token);
+        AddLikerTask::dispatch($groupUrls, $maxLikes, $token);
 
+        return redirect()->route('liker-result');
+    }
+
+    public function result()
+    {
         $likingTasks = Liking::all()->sortByDesc('date');
 
         return view('liker.result', [

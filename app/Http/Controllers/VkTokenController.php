@@ -32,6 +32,8 @@ class VkTokenController extends Controller
         session(['vk_token' => $request->input()['vk_token']]);
         session()->flash('gotToken', 'Ура, мы получили токен');
 
-        return redirect()->route('checker-home');
+        $sourceUrl = $request->header('referer');
+
+        return redirect($sourceUrl);
     }
 }
