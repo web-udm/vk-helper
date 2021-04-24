@@ -30,6 +30,7 @@ class VkApiService
             $posts = array_merge($posts, [
                 LinkEditHelper::getGroupName($groupUrl) => $this->getPostsFromOneGroup($groupUrl, $postsNumber),
             ]);
+            sleep(2);
         }
 
         return $posts;
