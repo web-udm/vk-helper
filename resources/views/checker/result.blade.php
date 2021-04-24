@@ -10,7 +10,7 @@
             @foreach ($groupData as $post)
                 <div class="results__data-wrapper" id="{{ $groupName }}">
                     <div class="results__item results__time-wrapper">
-                        <time> {{ $post['date'] }}</time>
+                        <time> {{ date('d-m-Y H:i:s', $post['date']) }}</time>
                     </div>
                     <div class="results__item results__emojies-wrapper">
                         <p class="results__emojies-count">
