@@ -14,9 +14,9 @@
     <section class="main-form">
         <div class="row justify-content-center">
             @if (session()->has('gotToken'))
-            <div class="alert alert-success" role="alert">
-                {{ session()->get('gotToken') }}
-            </div>
+                <div class="alert alert-success" role="alert">
+                    {{ session()->get('gotToken') }}
+                </div>
             @endif
             <form class="col-lg-9" method="post" action="/checker/result">
                 @csrf
@@ -38,16 +38,14 @@
                 </label><br>
                 <input class="main-form__button btn btn-success" type="submit" value="Получить помощь 🐶">
             </form>
-            @if(env('APP_ENV') == 'local')
-                <form action="/set-vk-token">
-                    <input type="text" class="form-input" name="vk_token">
-                    <input type="submit" class="btn">
-                </form>
-            @endif
-            <a type="button" class="main-form__token-link btn btn-primary"
-               href="/get-vk-token">
-                Получить токен
-            </a>
+            <form class="main-form__token-form" action="/set-vk-token">
+                <a type="button" class="main-form__token-link btn btn-primary"
+                   href="/get-vk-token">
+                    Получить токен
+                </a>
+                <input type="text" class="form-input" name="vk_token">
+                <input type="submit" class="btn btn-info" value="Отправить токен">
+            </form>
         </div>
     </section>
 @endsection

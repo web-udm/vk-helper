@@ -30,6 +30,7 @@ Route::prefix('checker')->group(function () {
 
 Route::prefix('liker')->group(function () {
     Route::get('/home', [LikerController::class, 'home'])->name('liker-home');
+    Route::post('/addTask', [LikerController::class, 'addTask'])->name('liker-addTask');
     Route::any('/result', [LikerController::class, 'result'])->name('liker-result');
 });
 
