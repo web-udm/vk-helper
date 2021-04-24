@@ -14,5 +14,3 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 #mysql-extension
 RUN	docker-php-ext-install mysqli \
 	&& docker-php-ext-install pdo_mysql
-
-RUN chown www-data:www-data -R storage/
