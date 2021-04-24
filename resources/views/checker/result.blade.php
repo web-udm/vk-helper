@@ -33,9 +33,11 @@
                         </p>
                     </div>
                     <div class="results__item results__content-wrapper">
-                        @foreach ($post['images'] as $image)
-                            <img src="{{ $image }}">
-                        @endforeach
+                        @if (isset($post['images']))
+                            @foreach ($post['images'] as $image)
+                                <img src="{{ $image }}">
+                            @endforeach
+                        @endif
                         <p class="results__text">{{ $post['text'] }}</p>
                     </div>
                 </div>
