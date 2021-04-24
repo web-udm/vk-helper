@@ -4,6 +4,8 @@
 /storage/*.key
 /vendor
 /logs
+/tests
+/docker/mysql
 .idea/
 .env
 .env.backup

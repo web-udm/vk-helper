@@ -8,19 +8,19 @@ use App\Serializers\PostSerializer;
 use App\Services\VkApiService;
 use App\Validators\LinksValidator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CheckerController extends Controller
 {
-    public function home(Request $request)
+    public function home()
     {
         return view('checker.home');
     }
 
-    public function result(
-        Request $request,
-        LinksValidator $linksValidator,
-        VkApiService $vkApiService,
-        PostSerializer $postSerializer
+    public function result(Request $request,
+                           LinksValidator $linksValidator,
+                           VkApiService $vkApiService,
+                           PostSerializer $postSerializer
     )
     {
         if (VkTokenHelper::isTokenInSession()) {
@@ -37,7 +37,7 @@ class CheckerController extends Controller
         $linksValidator->validate($groupUrls);
 
         $vkApiService->setToken($token);
-        $posts = $vkApiService->getPosts($groupUrls, $postsNumber);
+        $posts = $vkApiService->getPostsFromAllGroups($groupUrls, $postsNumber);
         $serializePosts = $postSerializer->serialize($posts);
 
         return view('checker.result', [

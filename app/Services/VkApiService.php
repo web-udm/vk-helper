@@ -2,12 +2,13 @@
 
 namespace App\Services;
 
+use App\Exceptions\WrongLikingException;
 use App\Helpers\LinkEditHelper;
 use VK\Client\VKApiClient;
 
 class VkApiService
 {
-    private vkApiClient $vkApiClient;
+    private VKApiClient $vkApiClient;
 
     private string $token;
 
@@ -21,27 +22,71 @@ class VkApiService
         $this->token = $token;
     }
 
-    public function getPosts(array $groupUrls, int $postsNumber): array
+    public function getPostsFromAllGroups(array $groupUrls, int $postsNumber): array
     {
         $posts = [];
 
         foreach ($groupUrls as $groupUrl) {
-            $posts = array_merge($posts, $this->getPost($groupUrl, $postsNumber));
+            $posts = array_merge($posts, [
+                LinkEditHelper::getGroupName($groupUrl) => $this->getPostsFromOneGroup($groupUrl, $postsNumber),
+            ]);
         }
 
         return $posts;
     }
 
-    public function getPost(string $groupUrl, int $postsNumber): array
+    private function getPostsFromOneGroup(string $groupUrl, int $postsNumber): array
     {
         $groupName = LinkEditHelper::getGroupName($groupUrl);
 
         $groupData = $this->vkApiClient->wall()->get($this->token, [
-             //todo немного тяжеловатая конструкция, лучше переписать
-             preg_match('#^\d+$#', $groupName) == 1 ? 'owner_id' : 'domain' => $groupName,
+            preg_match('#^\d+$#', $groupName) == 1 ? 'owner_id' : 'domain' => $groupName,
             'count' => $postsNumber
         ]);
 
-        return [$groupName => $groupData['items']];
+        return $groupData['items'];
+    }
+
+    /**
+     * Лайкинг постов из переданных массивом ссылок групп
+     */
+    public function likePostsFromAllGroups(array $groupUrls, int $maxLikes)
+    {
+        foreach ($groupUrls as $groupUrl) {
+            $this->likePostsFromOneGroup($groupUrl, $maxLikes);
+        }
+    }
+
+    /**
+     * Лайкаем посты в указанной по ссылке группе. Лайкинг идет до первого залайканного пользователем поста.
+     * Закреп пропускается.
+     *
+     */
+    private function likePostsFromOneGroup(string $groupUrl, int $maxLikes)
+    {
+        $posts = $this->getPostsFromOneGroup($groupUrl, $maxLikes);
+
+        $vkApiClient = new VKApiClient();
+
+        $res = [];
+
+        foreach ($posts as $post) {
+            if (isset($post['is_pinned'])) {
+                continue;
+            }
+
+            if ($post['likes']['user_likes'] > 0) {
+                break;
+            }
+
+            $res[] = $vkApiClient->likes()->add($this->token, [
+                'type' => 'post',
+                'owner_id' => $post['owner_id'],
+                'item_id' => $post['id'],
+            ]);
+            sleep(5);
+        }
+
+        return $res;
     }
 }

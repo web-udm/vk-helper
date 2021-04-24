@@ -51,6 +51,8 @@ main {
     margin-top: 10px;
 }
 
+/* checker.results */
+
 .results__group-name {
     text-align: center;
 }
@@ -102,4 +104,36 @@ main {
 
 .wrong-word {
     color: red;
+}
+
+/* liker.results */
+
+.liking-task__item-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    width: 50%;
+    justify-content: space-between;
+
+    border: 2px solid black;
+    border-bottom: none;
+}
+
+.liking-task__item-wrapper__in-process {
+    background-color: #ffcd39;
+}
+
+.liking-task__item-wrapper__complete {
+    background-color: #146c43;
+}
+
+.liking-task__item-parameter {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.result-link {
+    text-align: center;
 }
