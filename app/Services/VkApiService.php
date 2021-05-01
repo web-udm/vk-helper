@@ -85,7 +85,7 @@ class VkApiService
                 'owner_id' => $post['owner_id'],
                 'item_id' => $post['id'],
             ]);
-            sleep(5);
+            sleep(rand(6, 10));
         }
 
         return $res;
