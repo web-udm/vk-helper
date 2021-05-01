@@ -34,16 +34,16 @@
                         <option value="3">3</option>
                         <option value="4">4</option>
                         <option value="5">5</option>
-                        <option value="5">6</option>
-                        <option value="5">7</option>
-                        <option value="5">8</option>
-                        <option value="5">9</option>
-                        <option value="5">10</option>
-                        <option value="5">11</option>
-                        <option value="5">12</option>
-                        <option value="5">13</option>
-                        <option value="5">14</option>
-                        <option value="5">15</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
                     </select>
                 </label><br>
                 <input class="main-form__button btn btn-success" type="submit" value="Получить помощь 🐶">
