@@ -40,10 +40,17 @@ class VkApiService
     {
         $groupName = LinkEditHelper::getGroupName($groupUrl);
 
-        $groupData = $this->vkApiClient->wall()->get($this->token, [
-            preg_match('#^\d+$#', $groupName) == 1 ? 'owner_id' : 'domain' => $groupName,
-            'count' => $postsNumber
-        ]);
+        if (preg_match('#^\d+$#', $groupName, $match) == 1 ) {
+            $groupData = $this->vkApiClient->wall()->get($this->token, [
+                'owner_id' => '-' . $match[0],
+                'count' => $postsNumber
+            ]);
+        } else {
+            $groupData = $this->vkApiClient->wall()->get($this->token, [
+                'domain' => $groupName,
+                'count' => $postsNumber
+            ]);
+        }
 
         return $groupData['items'];
     }
